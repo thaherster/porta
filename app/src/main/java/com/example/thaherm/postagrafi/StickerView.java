@@ -1,4 +1,4 @@
-package com.example.thaherm.postagraf;
+package com.example.thaherm.postagrafi;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,7 +23,7 @@ import android.widget.ImageView;
 
 public abstract class StickerView extends FrameLayout {
 
-    public static final String TAG = "com.knef.stickerView";
+    public static final String TAG = "TOUCH";
     private BorderView iv_border;
     private ImageView iv_scale;
 //    private ImageView iv_delete;
@@ -41,6 +42,7 @@ public abstract class StickerView extends FrameLayout {
 
     private final static int BUTTON_SIZE_DP = 30;
     private final static int SELF_SIZE_DP = 100;
+    private Boolean contlerinvisible = true;
 
 
 
@@ -63,6 +65,38 @@ public abstract class StickerView extends FrameLayout {
 
 //------------------------------------------
 
+
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
+    }
+
+    public float getThis_orgX() {
+        return this_orgX;
+    }
+
+    public void setThis_orgX(float this_orgX) {
+        this.this_orgX = this_orgX;
+    }
+
+    public float getThis_orgY() {
+        return this_orgY;
+    }
+
+    public void setThis_orgY(float this_orgY) {
+        this.this_orgY = this_orgY;
+    }
 
     public float getScale_orgX() {
         return scale_orgX;
@@ -161,6 +195,7 @@ public abstract class StickerView extends FrameLayout {
         this.iv_scale.setTag("iv_scale");
 //        this.iv_delete.setTag("iv_delete");
 //        this.iv_flip.setTag("iv_flip");
+        setControlItemsHidden();
 
         int margin = convertDpToPixel(BUTTON_SIZE_DP, getContext())/2;
         int size = convertDpToPixel(SELF_SIZE_DP, getContext());
@@ -170,7 +205,7 @@ public abstract class StickerView extends FrameLayout {
                         size,
                         size
                 );
-        this_params.gravity = Gravity.CENTER;
+        this_params.gravity = Gravity.NO_GRAVITY;
 
         LayoutParams iv_main_params =
                 new LayoutParams(
@@ -248,12 +283,14 @@ public abstract class StickerView extends FrameLayout {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
 
+
             if(view.getTag().equals("DraggableViewGroup")) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.v(TAG, "sticker view action down");
                         move_orgX = event.getRawX();
                         move_orgY = event.getRawY();
+                        contlerinvisible=false;
                         break;
                     case MotionEvent.ACTION_MOVE:
                         Log.v(TAG, "sticker view action move");
@@ -263,16 +300,21 @@ public abstract class StickerView extends FrameLayout {
                         StickerView.this.setY(StickerView.this.getY() + offsetY);
                         move_orgX = event.getRawX();
                         move_orgY = event.getRawY();
+                        Log.v("XXXXXXXXX", "move_orgX "+move_orgX +" centerx" + getX());
+                        Log.v("XXXXXXXXX", "move move_orgY "+move_orgY+" centery" + getY());
                         break;
                     case MotionEvent.ACTION_UP:
                         Log.v(TAG, "sticker view action up");
+                        contlerinvisible = true;
                         break;
                 }
+                setControlItemsHidden();
+
             }else if(view.getTag().equals("iv_scale")){
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.v(TAG, "iv_scale action down");
-
+                        contlerinvisible = false;
                         this_orgX = StickerView.this.getX();
                         this_orgY = StickerView.this.getY();
 
@@ -301,9 +343,12 @@ public abstract class StickerView extends FrameLayout {
                                 statusBarHeight+
                                 (float)StickerView.this.getHeight()/2;
 
+
+
                         break;
                     case MotionEvent.ACTION_MOVE:
                         Log.v(TAG, "iv_scale action move");
+                        Log.v("BUHAHAH", "iv_scale action move");
 
                         rotate_newX = event.getRawX();
                         rotate_newY = event.getRawY();
@@ -313,6 +358,7 @@ public abstract class StickerView extends FrameLayout {
                                         - Math.atan2(scale_orgY - centerY, scale_orgX - centerX))*180/Math.PI;
 
                         Log.v(TAG, "angle_diff: "+angle_diff);
+                        Log.v("BUHAHAH", "angle_diff: "+angle_diff);
 
                         double length1 = getLength(centerX, centerY, scale_orgX, scale_orgY);
                         double length2 = getLength(centerX, centerY, event.getRawX(), event.getRawY());
@@ -349,10 +395,12 @@ public abstract class StickerView extends FrameLayout {
 
                         double angle = Math.atan2(event.getRawY() - centerY, event.getRawX() - centerX) * 180 / Math.PI;
                         Log.v(TAG, "log angle: " + angle);
+                        Log.v("BUHAHAH", "log angle: " + angle);
 
                         //setRotation((float) angle - 45);
                         setRotation((float) angle - 45);
                         Log.v(TAG, "getRotation(): " + getRotation());
+                        Log.v("BUHAHAH", "getRotation(): " + getRotation());
 
                         onRotating();
 
@@ -361,14 +409,18 @@ public abstract class StickerView extends FrameLayout {
 
                         scale_orgX = event.getRawX();
                         scale_orgY = event.getRawY();
+                        Log.v("BUHAHAH", "scale_orgX(): " + scale_orgX);
+                        Log.v("BUHAHAH", "scale_orgY(): " + scale_orgY);
 
                         postInvalidate();
                         requestLayout();
                         break;
                     case MotionEvent.ACTION_UP:
                         Log.v(TAG, "iv_scale action up");
+                        contlerinvisible = true;
                         break;
                 }
+                setControlItemsHidden();
             }
             return true;
         }
@@ -383,7 +435,7 @@ public abstract class StickerView extends FrameLayout {
         return Math.sqrt(Math.pow(y2-y1, 2)+Math.pow(x2-x1, 2));
     }
 
-    private float[] getRelativePos(float absX, float absY){
+    public float[] getRelativePos(float absX, float absY){
         Log.v("ken", "getRelativePos getX:"+((View)this.getParent()).getX());
         Log.v("ken", "getRelativePos getY:"+((View)this.getParent()).getY());
         float [] pos = new float[]{
@@ -391,17 +443,36 @@ public abstract class StickerView extends FrameLayout {
                 absY-((View)this.getParent()).getY()
         };
         Log.v(TAG, "getRelativePos absY:"+absY);
+        Log.v(TAG, "getRelativePos absX:"+absX);
         Log.v(TAG, "getRelativePos relativeY:"+pos[1]);
+        Log.v(TAG, "getRelativePos relativeX:"+pos[0]);
+        Log.v("BUHAHAH", "getRelativePos absY:"+absY);
+        Log.v("BUHAHAH", "getRelativePos absX:"+absX);
+        Log.v("BUHAHAH", "getRelativePos relativeY:"+pos[1]);
+        Log.v("BUHAHAH", "getRelativePos relativeX:"+pos[0]);
         return pos;
     }
 
-    public void setControlItemsHidden(boolean isHidden){
-        if(isHidden) {
-            iv_border.setVisibility(View.INVISIBLE);
-            iv_scale.setVisibility(View.INVISIBLE);
+    public void setControlItemsHidden( ){
+        if(contlerinvisible) {
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Do something after 100ms
+                    if(contlerinvisible)
+                    {
+                        iv_border.setVisibility(View.INVISIBLE);
+                        iv_scale.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }, 2000);
 //            iv_delete.setVisibility(View.INVISIBLE);
 //            iv_flip.setVisibility(View.INVISIBLE);
         }else{
+
+
             iv_border.setVisibility(View.VISIBLE);
             iv_scale.setVisibility(View.VISIBLE);
 //            iv_delete.setVisibility(View.VISIBLE);

@@ -1,4 +1,4 @@
-package com.example.thaherm.postagraf;
+package com.example.thaherm.postagrafi;
 
 import android.content.Context;
 import android.graphics.Bitmap;

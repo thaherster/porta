@@ -6,7 +6,16 @@
     android:id="@+id/canvasView"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.thaherm.postagraf.PhotoActivity"
+    tools:context="com.example.thaherm.postagrafi.PhotoActivity"
     tools:showIn="@layout/activity_photo">
+    <Button
+        android:id="@+id/but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/img"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
