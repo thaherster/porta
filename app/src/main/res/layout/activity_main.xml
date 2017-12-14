@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.thaherm.postagraf.MainActivity">
+
+
+
+    <com.github.gcacace.signaturepad.views.SignaturePad
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/signature_pad"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/toolbarz"
+        android:layout_height="match_parent"
+        app:penColor="@android:color/black" />
+    <LinearLayout
+        android:id="@+id/seekbrushlayout"
+        android:layout_width="match_parent"
+        android:layout_above="@id/toolbarz"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <SeekBar
+            android:id="@+id/seekbrush"
+            android:layout_margin="8dp"
+            android:max="49"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/seektext"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_above="@id/toolbarz"
+        android:id="@+id/colorlayout"
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <HorizontalScrollView
+            android:background="@android:color/darker_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/black"
+                    android:id="@+id/black_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:id="@+id/white_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/yellow"
+                    android:id="@+id/yellow_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/orange"
+                    android:id="@+id/orange_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/red"
+                    android:id="@+id/red_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/pink"
+                    android:id="@+id/pink_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/violet"
+                    android:id="@+id/violet_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/blue"
+                    android:id="@+id/blue_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/turquice"
+                    android:id="@+id/turquice_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+                <Button
+                    android:layout_margin="8dp"
+                    android:background="@color/green"
+                    android:id="@+id/green_button"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/toolbarz"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/cancel"
+            android:text="Cancel"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/brush"
+            android:src="@android:drawable/ic_menu_slideshow"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/color"
+            android:src="@android:drawable/ic_menu_compass"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/clear"
+            android:src="@android:drawable/ic_delete"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/add"
+            android:text="add"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
